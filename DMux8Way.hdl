@@ -1,0 +1,28 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/DMux8Way.hdl
+
+/**
+ * 8-way demultiplexor:
+ * {a, b, c, d, e, f, g, h} = {in, 0, 0, 0, 0, 0, 0, 0} if sel == 000
+ *                            {0, in, 0, 0, 0, 0, 0, 0} if sel == 001
+ *                            etc.
+ *                            {0, 0, 0, 0, 0, 0, 0, in} if sel == 111
+ */
+
+CHIP DMux8Way {
+    IN in, sel[3];
+    OUT a, b, c, d, e, f, g, h;
+
+    PARTS:
+    // Put your code here:
+        //first DMux4Way selects one of 4 groups of 2 outputs (a,e), (b,f)...
+        DMux4Way(in=in, sel=sel[0..1], a=aegroup, b=bfgroup, c=cggroup, d=dhgroup);
+
+        //2-way DMuxs choose between the two outputs in the selected group
+        DMux(in=aegroup, sel=sel[2], a=a, b=e);
+        DMux(in=bfgroup, sel=sel[2], a=b, b=f);
+        DMux(in=cggroup, sel=sel[2], a=c, b=g);
+        DMux(in=dhgroup, sel=sel[2], a=d, b=h);
+}

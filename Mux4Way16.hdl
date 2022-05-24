@@ -1,0 +1,26 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Mux4Way16.hdl
+
+/**
+ * 4-way 16-bit multiplexor:
+ * out = a if sel == 00
+ *       b if sel == 01
+ *       c if sel == 10
+ *       d if sel == 11
+ */
+
+CHIP Mux4Way16 {
+    IN a[16], b[16], c[16], d[16], sel[2];
+    OUT out[16];
+
+    PARTS:
+    // Put your code here:
+        //layer 1, 2 Mux16 gates choose between a/b and c/d using first sel bit
+        Mux16(a=a, b=b, sel=sel[0], out=layer1out1);
+        Mux16(a=c, b=d, sel=sel[0], out=layer1out2);
+
+        //layer 2, Mux16 gate chooses bewteen the 2 previous outputs using second sel bit
+        Mux16(a=layer1out1, b=layer1out2, sel=sel[1], out=out);
+}

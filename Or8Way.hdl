@@ -1,0 +1,29 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Or8Way.hdl
+
+/**
+ * 8-way Or: 
+ * out = (in[0] or in[1] or ... or in[7])
+ */
+
+CHIP Or8Way {
+    IN in[8];
+    OUT out;
+
+    PARTS:
+    // Put your code here:
+        //Use layers of or gates to condense 8 bits to 4, then 2, then 1
+
+        Or(a=in[0], b=in[1], out=or1out);
+        Or(a=in[2], b=in[3], out=or2out);
+        Or(a=in[4], b=in[5], out=or3out);
+        Or(a=in[6], b=in[7], out=or4out);
+
+        Or(a=or1out, b=or2out, out=layer2or1out);
+        Or(a=or3out, b=or4out, out=layer2or2out);
+
+        Or(a=layer2or1out, b=layer2or2out, out=out);
+
+}
